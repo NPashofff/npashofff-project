@@ -10,7 +10,17 @@ export default function SidebarElement() {
                     <MenuItem> Line charts </MenuItem>
                 </SubMenu>
                 <MenuItem className='shadow-sm mb-2'> Documentation </MenuItem>
-                <MenuItem className='shadow-sm mb-2' component={<Link to={'/login'}/>}> Login </MenuItem>
+                {true ?
+                    (
+                        <>
+                            <MenuItem className='shadow-sm mb-2' component={<Link to={'/login'} />}> Login </MenuItem>
+                            <MenuItem className='shadow-sm mb-2' component={<Link to={'/login'} />}> Register </MenuItem>
+                        </>
+                    )
+                    : (<MenuItem className='shadow-sm mb-2' component={<Link to={'/login'} />}> Logout </MenuItem>)
+                }
+
+
             </Menu>
         </Sidebar>
     )
