@@ -1,25 +1,29 @@
-import logo from './logo.svg';
+import React from 'react';
 import './App.css';
+import LoginForm from './components/LoginForm/LoginForm';
+import { Routes, Route } from 'react-router-dom'
+import MainElement from './components/MainElement/MainElement';
+
+
 
 function App() {
+
+  function LogIn() {
+    console.log('cliced');
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <Routes>
+        <Route path='/login' element={<LoginForm />} />
+        <Route path='/' element={<MainElement LogIn={LogIn}/>} />
+
+      </Routes>
+    </>
+
   );
 }
 
 export default App;
+
+
