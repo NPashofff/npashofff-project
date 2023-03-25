@@ -1,15 +1,50 @@
 import './style.css'
-import { Link, u } from 'react-router-dom';
+import { useContext } from 'react';
+import { UserContext } from '../../App';
+import { Link, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 
-export default function LoginForm({handleLogin}) {
+
+export default function LoginForm() {
+    const { setUser } = useContext(UserContext)
+    const navigate = useNavigate();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const handleSubmit = (event, email, password) => {
+
+    function navToRegister(){
+        navigate('/register')
+    }
+
+    const handleSubmit = async (event, email, password) => {
         event.preventDefault();
         // perform validation and login logic here
+        // try {
+        const response = await fetch('http://localhost:3030/users/login', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ email, password })
+        });
+        const data = await response.json();
+        if (response.ok) {
+            setUser(data);
+            //setLoginError(false);
+            navigate('/');
+        } else {
+            setUser({});
+            console.log(data);
+            alert(data.message);
+            //setLoginError(true);
+        }
+        // } catch (error) {
+        //   console.error(error);
+        //   setUser(null);
+        //   setLoginError(true);
+        //   console.log("catch")
+        // } 
+        //    handleLogin(email, password);
 
-        handleLogin(email, password);
     }
 
     return (
@@ -40,8 +75,8 @@ export default function LoginForm({handleLogin}) {
 
                 </div>
                 <div className="action">
-                    <button type='button'><Link to={'/register'} className={'linkTextStyle'}>Register</Link></button>
-                    <button type='submit'><Link to={'/'}>Sign in</Link></button>
+                    <button type='button' onClick={navToRegister}>Register</button>
+                    <button type='submit'>Sign in</button>
                 </div>
             </form>
         </div>

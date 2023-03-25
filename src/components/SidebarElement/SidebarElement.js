@@ -4,7 +4,13 @@ import { Link } from 'react-router-dom';
 import { UserContext } from '../../App';
 
 export default function SidebarElement() {
-    const {user} = useContext(UserContext)
+    const {user, setUser} = useContext(UserContext)
+
+    function logOut(){
+        //Logout from server
+        setUser({});
+    }
+
     return (
         <Sidebar >
             <Menu>
@@ -14,11 +20,11 @@ export default function SidebarElement() {
                 </SubMenu>
                 <MenuItem className='shadow-sm mb-2'> Documentation </MenuItem>
                 {user._id ?
-                    (<MenuItem className='shadow-sm mb-2' component={<Link to={'/login'} />}> Logout </MenuItem>)
+                    (<MenuItem className='shadow-sm mb-2' onClick={logOut} component={<Link to={'/'} />}> Logout {user.email} </MenuItem>)
                     :
                     <>
                         <MenuItem className='shadow-sm mb-2' component={<Link to={'/login'} />}> Login </MenuItem>
-                        <MenuItem className='shadow-sm mb-2' component={<Link to={'/login'} />}> Register </MenuItem>
+                        <MenuItem className='shadow-sm mb-2' component={<Link to={'/register'} />}> Register </MenuItem>
                     </>
                 }
 
