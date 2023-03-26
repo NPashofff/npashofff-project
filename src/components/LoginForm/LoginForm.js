@@ -6,6 +6,7 @@ import { useState } from 'react';
 
 
 export default function LoginForm() {
+    const [error, setError] = useState('');
     const { setUser } = useContext(UserContext)
     const navigate = useNavigate();
     const [email, setEmail] = useState('');
@@ -17,7 +18,6 @@ export default function LoginForm() {
 
     const handleSubmit = async (event, email, password) => {
         event.preventDefault();
-        // perform validation and login logic here
         // try {
         const response = await fetch('http://localhost:3030/users/login', {
             method: 'POST',
@@ -34,8 +34,8 @@ export default function LoginForm() {
         } else {
             setUser({});
             console.log(data);
-            alert(data.message);
-            //setLoginError(true);
+            setError(data.message);
+            
         }
         // } catch (error) {
         //   console.error(error);
@@ -52,6 +52,9 @@ export default function LoginForm() {
             <form id="login" method="POST" onSubmit={(e) => handleSubmit(e, email, password)}>
                 <h1>Login</h1>
                 <div className="content">
+                    <div>
+                        <span style={{color: "red"}}>{error}</span>
+                    </div>
                     <div className="input-field">
                         <input
                             type="email"
