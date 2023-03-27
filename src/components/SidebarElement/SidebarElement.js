@@ -18,7 +18,7 @@ export default function SidebarElement() {
                     <MenuItem> Pie charts </MenuItem>
                     <MenuItem> Line charts </MenuItem>
                 </SubMenu>
-                <MenuItem className='shadow-sm mb-2'> Documentation </MenuItem>
+                <MenuItem className='shadow-sm mb-2'  component={<Link to={'/registred'} />}> Documentation </MenuItem>
                 {user._id ?
                     (<MenuItem className='shadow-sm mb-2' onClick={logOut} component={<Link to={'/'} />}> Logout {user.email} </MenuItem>)
                     :
