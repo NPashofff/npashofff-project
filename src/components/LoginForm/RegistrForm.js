@@ -1,20 +1,25 @@
 import './style.css'
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
-import { useContext } from 'react';
-import { UserContext } from '../../App';
+// import { useContext } from 'react';
+// import { UserContext } from '../../App';
 
 export default function RegisterForm() {
-    const { setUser } = useContext(UserContext)
+    const [error, setError] = useState('');
+    //const { setUser } = useContext(UserContext)
     const navigate = useNavigate();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [comfirmPassword, setComfirmPassword] = useState('');
+    
+    function navToLogin() {
+        navigate('/login');
+    }
 
     const handleSubmit = async (event) => {
         event.preventDefault();
         if (password != comfirmPassword) {
-            alert('Password not mach');
+            setError('Password don`t mach');
         } else {
             const response = await fetch('http://localhost:3030/users/register', {
                 method: 'POST',
@@ -25,21 +30,12 @@ export default function RegisterForm() {
             });
             const data = await response.json();
             if (response.ok) {
-                //console.log(data);
-                //setUser(data);
-                //setLoginError(false);
                 navigate('/login');
             } else {
-                //setUser({});
                 console.log(data);
-                alert(data.message);
-                //setLoginError(true);
+                setError(data.message);
             }
         }
-    }
-
-    function navToLogin() {
-        navigate('/login');
     }
 
     return (
@@ -47,6 +43,9 @@ export default function RegisterForm() {
             <form method="POST" onSubmit={(e) => handleSubmit(e, email, password)}>
                 <h1>Reagister</h1>
                 <div className="content">
+                    <div>
+                        <span style={{ color: "red" }}>{error}</span>
+                    </div>
                     <div className="input-field">
                         <input
                             type="email"

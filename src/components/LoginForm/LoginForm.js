@@ -12,13 +12,12 @@ export default function LoginForm() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
-    function navToRegister(){
+    function navToRegister() {
         navigate('/register')
     }
 
     const handleSubmit = async (event, email, password) => {
         event.preventDefault();
-        // try {
         const response = await fetch('http://localhost:3030/users/login', {
             method: 'POST',
             headers: {
@@ -26,25 +25,18 @@ export default function LoginForm() {
             },
             body: JSON.stringify({ email, password })
         });
+
         const data = await response.json();
+
         if (response.ok) {
             setUser(data);
-            //setLoginError(false);
             navigate('/');
         } else {
             setUser({});
             console.log(data);
             setError(data.message);
-            
-        }
-        // } catch (error) {
-        //   console.error(error);
-        //   setUser(null);
-        //   setLoginError(true);
-        //   console.log("catch")
-        // } 
-        //    handleLogin(email, password);
 
+        }
     }
 
     return (
@@ -53,7 +45,7 @@ export default function LoginForm() {
                 <h1>Login</h1>
                 <div className="content">
                     <div>
-                        <span style={{color: "red"}}>{error}</span>
+                        <span style={{ color: "red" }}>{error}</span>
                     </div>
                     <div className="input-field">
                         <input
