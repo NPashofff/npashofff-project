@@ -16,15 +16,27 @@ export default function RegisterForm() {
         navigate('/login');
     }
 
+    const isInvalidEmail = (email) => {
+        if (email.toLowerCase().match(
+            /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+        )) {
+            return false;
+        };
+        return true;
+    };
+
     const handleSubmit = async (event) => {
         event.preventDefault();
 
         if (email.length >= 6 && email.length <= 50) {
             setError("Email must be between 6 and 50 charecter")
-        }    
+        }
 
-        if (/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(email)){
+        console.log(isInvalidEmail(email));
+
+        if (validateEmail(email)) {
             setError("Invalid email address");
+            return;
         }
 
         if (password !== comfirmPassword) {
@@ -35,6 +47,10 @@ export default function RegisterForm() {
         if (password.length < 4 || password.length > 12) {
             setError('Password must be between 4 and 12 charecter');
             return;
+        }
+
+        if (!(/(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}/.test(password))) {
+            setError("Password must contains at least one uppercase letter, one lowercase letter, and one number");
         }
 
         const response = await fetch('http://localhost:3030/users/register', {
@@ -48,7 +64,6 @@ export default function RegisterForm() {
         if (response.ok) {
             navigate('/login');
         } else {
-            console.log(data);
             setError(data.message);
         }
 
