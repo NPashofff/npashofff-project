@@ -11,31 +11,47 @@ export default function RegisterForm() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [comfirmPassword, setComfirmPassword] = useState('');
-    
+
     function navToLogin() {
         navigate('/login');
     }
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-        if (password != comfirmPassword) {
-            setError('Password don`t mach');
-        } else {
-            const response = await fetch('http://localhost:3030/users/register', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ email, password })
-            });
-            const data = await response.json();
-            if (response.ok) {
-                navigate('/login');
-            } else {
-                console.log(data);
-                setError(data.message);
-            }
+
+        if (email.length >= 6 && email.length <= 50) {
+            setError("Email must be between 6 and 50 charecter")
+        }    
+
+        if (/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(email)){
+            setError("Invalid email address");
         }
+
+        if (password !== comfirmPassword) {
+            setError('Password don`t mach');
+            return;
+        }
+
+        if (password.length < 4 || password.length > 12) {
+            setError('Password must be between 4 and 12 charecter');
+            return;
+        }
+
+        const response = await fetch('http://localhost:3030/users/register', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ email, password })
+        });
+        const data = await response.json();
+        if (response.ok) {
+            navigate('/login');
+        } else {
+            console.log(data);
+            setError(data.message);
+        }
+
     }
 
     return (

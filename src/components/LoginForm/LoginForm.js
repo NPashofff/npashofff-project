@@ -1,7 +1,7 @@
 import './style.css'
 import { useContext } from 'react';
 import { UserContext } from '../../App';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 
 
@@ -18,6 +18,7 @@ export default function LoginForm() {
 
     const handleSubmit = async (event, email, password) => {
         event.preventDefault();
+        
         const response = await fetch('http://localhost:3030/users/login', {
             method: 'POST',
             headers: {
@@ -35,7 +36,6 @@ export default function LoginForm() {
             setUser({});
             console.log(data);
             setError(data.message);
-
         }
     }
 
