@@ -2,15 +2,17 @@
   text-align: center;
 }
 
-
-.maina {
-  background-color: #ffffff;
-  min-height: 90vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  color: black;
+.left-div {
+  float: left;
+  width: 250px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  overflow: auto;
+  background-color: #ffffff; 
 }
 
-
+.right-div {
+  margin-left: 250px;
+}
