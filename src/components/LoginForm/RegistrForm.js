@@ -11,17 +11,22 @@ export default function RegisterForm() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [comfirmPassword, setComfirmPassword] = useState('');
-
+    const passRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{5,12}$/;
+    const emailRegex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+    ;
     function navToLogin() {
         navigate('/login');
     }
 
     const isInvalidEmail = (email) => {
-        if (email.toLowerCase().match(
-            /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-        )) {
-            return false;
-        };
+        if (email.toLowerCase().match(emailRegex)) return false;        
+            
+        return true;
+    };
+
+    const isInvalidPassword = (password) => {
+        if (password.match(passRegex)) return false;
+        
         return true;
     };
 
@@ -43,11 +48,13 @@ export default function RegisterForm() {
         }
 
         if (password.length < 4 || password.length > 12) {
-            setError('Password must be between 4 and 12 charecter');
+            setError('Password must be between 6 and 12 charecter');
             return;
         }
+         
+        console.log(password.match(passRegex));
 
-        if (!(/(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}/.test(password))) {
+        if (isInvalidPassword(password)) {
             setError("Password must contains at least one uppercase letter, one lowercase letter and number");
             return;
         }
