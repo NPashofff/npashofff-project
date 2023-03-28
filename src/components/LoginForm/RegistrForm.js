@@ -32,9 +32,7 @@ export default function RegisterForm() {
             setError("Email must be between 6 and 50 charecter")
         }
 
-        console.log(isInvalidEmail(email));
-
-        if (validateEmail(email)) {
+        if (isInvalidEmail(email)) {
             setError("Invalid email address");
             return;
         }
