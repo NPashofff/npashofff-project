@@ -28,3 +28,6 @@ code {
    width: 100%;
 }
 
+.root{
+  background-color: aquamarine !important;
+}
