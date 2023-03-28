@@ -26,7 +26,7 @@ export default function RegisterForm() {
 
     const isInvalidPassword = (password) => {
         if (password.match(passRegex)) return false;
-        
+
         return true;
     };
 
@@ -47,17 +47,17 @@ export default function RegisterForm() {
             return;
         }
 
-        if (password.length < 4 || password.length > 12) {
-            setError('Password must be between 6 and 12 charecter');
-            return;
-        }
-         
-        console.log(password.match(passRegex));
+        //comment for easy testing
 
-        if (isInvalidPassword(password)) {
-            setError("Password must contains at least one uppercase letter, one lowercase letter and number");
-            return;
-        }
+        // if (password.length <= 6 || password.length >= 12) {
+        //     setError('Password must be between 6 and 12 charecter');
+        //     return;
+        // }
+         
+        // if (isInvalidPassword(password)) {
+        //     setError("Password must contains at least one uppercase letter, one lowercase letter and number");
+        //     return;
+        // }
 
         const response = await fetch('http://localhost:3030/users/register', {
             method: 'POST',
