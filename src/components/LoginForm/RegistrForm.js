@@ -18,7 +18,7 @@ export default function RegisterForm() {
 
     const isInvalidEmail = (email) => {
         if (email.toLowerCase().match(
-            /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+            /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
         )) {
             return false;
         };
@@ -48,7 +48,8 @@ export default function RegisterForm() {
         }
 
         if (!(/(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}/.test(password))) {
-            setError("Password must contains at least one uppercase letter, one lowercase letter, and one number");
+            setError("Password must contains at least one uppercase letter, one lowercase letter and number");
+            return;
         }
 
         const response = await fetch('http://localhost:3030/users/register', {
@@ -82,7 +83,6 @@ export default function RegisterForm() {
                             autoComplete="nope"
                             onChange={(event) => setEmail(event.target.value)}
                             value={email}
-                        // required
                         />
                     </div>
                     <div className="input-field">
@@ -92,7 +92,6 @@ export default function RegisterForm() {
                             autoComplete="new-password"
                             value={password}
                             onChange={(event) => setPassword(event.target.value)}
-                        // required
                         />
                     </div>
                     <div className="input-field">
@@ -101,7 +100,6 @@ export default function RegisterForm() {
                             placeholder="Comfirm Password"
                             value={comfirmPassword}
                             onChange={(event) => setComfirmPassword(event.target.value)}
-                        // required
                         />
                     </div>
 
