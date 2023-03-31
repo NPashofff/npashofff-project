@@ -5,8 +5,13 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: beige;
+  font-family: 'Rubik', sans-serif;
 }
-
+/* body {
+  background: #cccccc;
+  font-family: 'Rubik', sans-serif;
+} */
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
@@ -28,6 +33,3 @@ code {
    width: 100%;
 }
 
-.root{
-  background-color: aquamarine !important;
-}

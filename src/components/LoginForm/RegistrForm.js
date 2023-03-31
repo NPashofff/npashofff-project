@@ -1,12 +1,11 @@
 import './style.css'
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
-// import { useContext } from 'react';
-// import { UserContext } from '../../App';
+import { requestFactory } from '../../services/requester';
 
 export default function RegisterForm() {
+    const request = requestFactory();
     const [error, setError] = useState('');
-    //const { setUser } = useContext(UserContext)
     const navigate = useNavigate();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -59,20 +58,12 @@ export default function RegisterForm() {
         //     return;
         // }
 
-        const response = await fetch('http://localhost:3030/users/register', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ email, password })
-        });
-        const data = await response.json();
-        if (response.ok) {
+        try {
+            const data = await request.post('/users/register', { email, password })
             navigate('/login');
-        } else {
-            setError(data.message);
+        } catch (error) {
+            setError(error.message);
         }
-
     }
 
     return (

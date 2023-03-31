@@ -3,6 +3,8 @@
 // import SidebarElement from '../SidebarElement/SidebarElement';
 // import Counter from '../Counter'
 
+import { TypeIcon } from "antd/es/message/PurePanel";
+
 export default function MainElement() {
 
 
@@ -15,10 +17,10 @@ export default function MainElement() {
   // };
 
   return (
-    <div style={{ display: 'flex', height: '100%', minHeight: '400px' }}>
+    <div >
 
       <main className='main ' >
-        <h1>Alabalabbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb</h1>
+        <h1>Home</h1>
       </main>
     </div>
   )

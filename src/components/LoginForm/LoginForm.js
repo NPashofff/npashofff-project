@@ -3,9 +3,11 @@ import { useContext } from 'react';
 import { UserContext } from '../../App';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
+import { requestFactory } from '../../services/requester';
 
 
 export default function LoginForm() {
+    const request = requestFactory();
     const [error, setError] = useState('');
     const { setUser } = useContext(UserContext)
     const navigate = useNavigate();
@@ -18,24 +20,14 @@ export default function LoginForm() {
 
     const handleSubmit = async (event, email, password) => {
         event.preventDefault();
-        
-        const response = await fetch('http://localhost:3030/users/login', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ email, password })
-        });
-
-        const data = await response.json();
-
-        if (response.ok) {
+       
+        try {
+            const data = await request.post('/users/login', { email, password })
             setUser(data);
             navigate('/');
-        } else {
+        } catch (error) {
             setUser({});
-            console.log(data);
-            setError(data.message);
+            setError(error.message);
         }
     }
 

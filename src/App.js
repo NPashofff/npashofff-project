@@ -22,11 +22,11 @@ function App() {
   return (
     <UserContext.Provider value={{ user, setUser }}>
       {!hideSidebar && (
-        <div class="left-div">
+        <div className="side-menu">
           <SidebarElement />
         </div>
       )}
-      <div class={!hideSidebar ? "right-div" : ""}>
+      <div className={!hideSidebar ? "main-content" : ""}>
         <Routes>
           {/* Guest Content */}
           <Route path='/login' element={<LoginForm />} />
